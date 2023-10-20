@@ -1,5 +1,4 @@
-Map = Class()
-sti = require 'lib.sti'
+local Map = Class()
 
 
 local function createColliders(layer, mundo, type, class)
@@ -15,37 +14,28 @@ local function createColliders(layer, mundo, type, class)
         )
         collider:setType(type)
         collider:setFixedRotation(true)
-        if class == 'box' then
-            collider:setMass(7)
-            collider:setRestitution(0.1)
-        end
         table.insert(colliders, collider)
     end
     return colliders
 end
 
-boxImage = love.graphics.newImage('box.png')
-box_width, box_height = boxImage:getDimensions()
+
 
 function Map:init(mundo)
-    self.layout = sti('map/design.lua')
+    self.layout = sti('src/game/1/map/design.lua')
     createColliders(self.layout.layers['ground_colliders'], mundo, 'static', 'ground')
-    self.boxes = createColliders(self.layout.layers['box'], mundo, 'dynamic', 'box')
+    self.boxes = {}
+    for _, obj in ipairs(self.layout.layers['box'].objects) do
+        table.insert(self.boxes, Box(mundo, obj.x, obj.y))
+    end
 end
 
 function Map:draw()
     self.layout:drawLayer(self.layout.layers['ground'])
     for index, box in ipairs(self.boxes) do
-        love.graphics.draw(
-            boxImage,
-            box:getX(),
-            box:getY(),
-            0,
-            1,
-            1,
-            box_width/2,
-            box_height/2
-        )
+        box:draw()
     end
 end
 
+
+return Map
