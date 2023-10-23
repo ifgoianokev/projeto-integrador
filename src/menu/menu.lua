@@ -6,7 +6,6 @@ local canChange
 local selectedOption = 1
 local options = {
     "PLAY",
-    "CONTROLES",
     "SCORES"
 }
 
@@ -68,10 +67,8 @@ end
 
 local function selectOption()
     if selectedOption == 1 then
-        Gamestate.switch(game)
+        Gamestate.switch(insertName)
     elseif selectedOption == 2 then
-        Gamestate.push(controlesMenu)
-    elseif selectedOption == 3 then
         Gamestate.push(scoresMenu)
     end
 end

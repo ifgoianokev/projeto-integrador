@@ -7,6 +7,7 @@ sti = require 'lib.sti'
 cam = require 'lib.camera'
 anim8 = require 'lib.anim8'
 Timer = require 'lib.timer'
+bitser = require 'lib.bitser'
 
 SCREEN_WIDTH, SCREEN_HEIGHT = love.window.getMode()
 
@@ -25,9 +26,7 @@ require 'src.entities.porta'
 require 'src.entities.palet'
 require 'src.entities.plataforma'
 
-require 'src.menu.menu'
-require 'src.menu.controles'
-require 'src.menu.scores'
+require 'saving'
 
 local FONT_PATH = "src/static/fonts/radiospacebitmap.ttf"
 local OLD_FONT_PATH = 'src/static/fonts/TiltNeon-Regular.ttf'
@@ -39,7 +38,20 @@ fonts = {
     big = love.graphics.newFont(FONT_PATH, SCREEN_WIDTH*0.045),
 }
 
+fonts_google = {
+    small = love.graphics.newFont(OLD_FONT_PATH, SCREEN_WIDTH*0.01),
+    medium = love.graphics.newFont(OLD_FONT_PATH, SCREEN_WIDTH*0.03),
+    big = love.graphics.newFont(OLD_FONT_PATH, SCREEN_WIDTH*0.045),
+}
+
+require 'src.menu.menu'
+require 'src.menu.controles'
+require 'src.menu.scores'
+require 'src.menu.insert_name'
+
 function love.load()
+    scores = saving.getScores()
+
     timer = Timer()
     camera = cam()
     Gamestate.registerEvents()
@@ -63,7 +75,7 @@ function love.joystickremoved(joystick)
 end
 
 function love.gamepadpressed(joystick, button)
-    print(button)
+    -- print(button)
 end
 
 

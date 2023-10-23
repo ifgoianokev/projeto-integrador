@@ -6,18 +6,20 @@ local doorImg = love.graphics.newImage('src/entities/porta/porta2.png')
 
 
 function Porta:open()
-    if self.openPressed then return end
+    if self.openPressed then return self.openTimer end
     self.openPressed = true
-    self.yspeed = -300
+    self.yspeed = -600
     self.collider:setType('dynamic')
-    return timer:after(2, function ()
+    self.openTimer = timer:after(2, function ()
         self.collider:destroy()
         self.isOpen = true
     end)
+    return self.openTimer
 end
 
 
 function Porta:init(mundo, x, y, w, h)
+    self.openTimer = nil
     self.openPressed = false
     self.x = x
     self.y = y

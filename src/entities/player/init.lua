@@ -14,14 +14,14 @@ local animations = {
 local walk_sound = love.audio.newSource("src/static/audio/running.mp3", "static")
 walk_sound:setLooping(true)
 
-
+local playerSpeed = 600
 
 function Player:init(mundo,x, y)
     self.touchingLadder = false
     self.grabbingLadder = false
     self.walk_sound = walk_sound
     self.mundo = mundo
-    self.speedx = 600
+    self.speedx = playerSpeed
     self.speedy = 200
     self.x = x
     self.y = y
@@ -59,7 +59,7 @@ function Player:update(dt)
     if self.grabbingLadder then
         self.speedx = 200
     else
-        self.speedx = 600
+        self.speedx = playerSpeed
     end
     self:move()
     self.animation:update(dt)

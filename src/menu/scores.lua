@@ -1,8 +1,10 @@
 scoresMenu = {}
 
 
-
 function scoresMenu:enter()
+    table.sort(scores, function (a, b)
+        return a.score > b.score
+    end)
     love.graphics.setFont(fonts.medium)
     love.graphics.setColor(1,1,1)
 end
@@ -12,8 +14,22 @@ function scoresMenu:leave()
 end
 
 function scoresMenu:draw()
-    love.graphics.print("Aqui vao os scores")
-    love.graphics.print("\npressione b ou esc para voltar")
+    love.graphics.printf("NOME", 50, 50, SCREEN_WIDTH, 'left')
+    love.graphics.printf("SCORE", 0, 50, SCREEN_WIDTH-50, 'right')
+    for index, save in ipairs(scores) do
+        love.graphics.printf(save.jogador, 50, 70 + fonts.big:getHeight()*index, SCREEN_WIDTH, 'left')
+        love.graphics.printf(tostring(save.score), 0, 70 + fonts.big:getHeight()*index, SCREEN_WIDTH-50, 'right')
+    end
+    love.graphics.setColor(0,0,0)
+    love.graphics.rectangle(
+        "fill",
+        0,
+        SCREEN_HEIGHT - fonts.big:getHeight()*2,
+        SCREEN_WIDTH,
+        fonts.big:getHeight()*2
+    )
+    love.graphics.setColor(1,1,1)
+    love.graphics.printf("Pressione b ou esc para voltar", 0, SCREEN_HEIGHT - fonts.big:getHeight(), SCREEN_WIDTH, 'left')
 end
 
 

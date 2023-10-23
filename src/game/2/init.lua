@@ -102,6 +102,9 @@ function fase2:interact()
         player.h,
         {'door'}
     ) > 0 then
+        if not self.mapa.portas[1].openPressed then
+            player.collider:setX(player.collider:getX() - 1)
+        end
         timerPorta = self.mapa.portas[1]:open()
     end
 end

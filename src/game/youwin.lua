@@ -3,6 +3,8 @@ youWin = {}
 
 
 function youWin:enter(level)
+    table.insert(scores, {jogador = nomeDoJogador, score = level.game.tempo})
+    saving.setScores(scores)
     screen = {
         opacity = 0
     }

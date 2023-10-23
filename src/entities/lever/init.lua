@@ -24,7 +24,6 @@ function Lever:init(mundo, x, y, w, h, dir)
     self.h = h
     self.x = x
     self.y = y
-    print(dir)
     self.dir = dir
     self.isActive = false
 
