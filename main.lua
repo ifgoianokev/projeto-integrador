@@ -13,16 +13,30 @@ SCREEN_WIDTH, SCREEN_HEIGHT = love.window.getMode()
 
 require 'src.game'
 require 'src.game.pause'
+require 'src.game.dead'
+require 'src.game.youwin'
+
 require 'src.entities.player'
 require 'src.entities.box'
+require 'src.entities.lever'
+require 'src.entities.acido'
+require 'src.entities.chave'
+require 'src.entities.porta'
+require 'src.entities.palet'
+require 'src.entities.plataforma'
+
 require 'src.menu.menu'
 require 'src.menu.controles'
 require 'src.menu.scores'
 
+local FONT_PATH = "src/static/fonts/radiospacebitmap.ttf"
+local OLD_FONT_PATH = 'src/static/fonts/TiltNeon-Regular.ttf'
+
+
 fonts = {
-    small = love.graphics.newFont('src/static/fonts/TiltNeon-Regular.ttf', SCREEN_WIDTH*0.01),
-    medium = love.graphics.newFont('src/static/fonts/TiltNeon-Regular.ttf', SCREEN_WIDTH*0.03),
-    big = love.graphics.newFont('src/static/fonts/TiltNeon-Regular.ttf', SCREEN_WIDTH*0.045),
+    small = love.graphics.newFont(FONT_PATH, SCREEN_WIDTH*0.01),
+    medium = love.graphics.newFont(FONT_PATH, SCREEN_WIDTH*0.03),
+    big = love.graphics.newFont(FONT_PATH, SCREEN_WIDTH*0.045),
 }
 
 function love.load()
@@ -53,3 +67,24 @@ function love.gamepadpressed(joystick, button)
 end
 
 
+
+function lookAt(player, map_width, map_height)
+    local x, y
+    local halfHeight = (SCREEN_HEIGHT/2)/camera.scale
+    local halfWidth = (SCREEN_WIDTH/2)/camera.scale
+    x = player.x
+    y = player.y
+    if x - halfWidth < 0 then
+        x = halfWidth
+    end
+    if x + halfWidth > map_width then
+        x = map_width - halfWidth
+    end
+    if y - halfHeight < 0 then
+        y =  halfHeight
+    end
+    if y + halfHeight > map_height then
+        y = map_height -  halfHeight
+    end
+    return x, y
+end

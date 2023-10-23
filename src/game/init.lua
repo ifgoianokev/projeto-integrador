@@ -1,35 +1,77 @@
 game = {}
 
-require 'src.game.1'
 require 'src.game.2'
+require 'src.game.1'
 
 local jump_sound = love.audio.newSource("src/static/audio/jump.mp3", 'static')
 jump_sound:setVolume(.3)
+local heart_img = love.graphics.newImage("src/static/img/coracao.png")
+local heart_w, heart_h = heart_img:getDimensions()
+local heart_scale = .3
 
+game_timer = Timer()
+
+local timer_total = 180
 
 
 function game:setPlayer(player)
     self.player = player
+    self.tempo = timer_total
 end
+
+local tempo
+
+local function tick()
+    tempo = tempo - 1
+end
+
 
 function game:enter()
     Gamestate.push(fase1)
+    self.vidas = 3
+    tempo = timer_total
+    self.handle = game_timer:every(1, tick)
+end
+
+function game:leave()
+    game_timer:cancel(self.handle)
 end
 
 
-
+function game:update(dt)
+    game_timer:update(dt)
+    self.tempo = tempo
+    if self.tempo <= 0 then
+        Gamestate.push(deadScreen)
+    end
+end
 
 
 function game:draw()
     --desenhar o hud
-    local x,y = self.player.collider:getPosition()
-    love.graphics.setFont(fonts.small)
-    love.graphics.print(string.format("%f\n%f\n%f", x, y, 1/dt_atual))
+    love.graphics.setFont(fonts.big)
+    love.graphics.printf(
+        string.format("%d", tempo),
+        0,
+        30,
+        SCREEN_WIDTH-30,
+        'right'
+    )
+    for i = 0, self.vidas -1, 1 do
+        love.graphics.draw(
+            heart_img,
+            30+ i* (heart_w*heart_scale + 5),
+            30,
+            0,
+            heart_scale
+        )
+    end
 end
 
 
 local function jumpPressed(player)
     if not player.grounded then return end
+    player.grabbingLadder = false
     jump_sound:seek(.08, 'seconds')
     jump_sound:play()
     player.impulso = 200

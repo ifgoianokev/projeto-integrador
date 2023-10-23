@@ -1,6 +1,5 @@
 local Map = Class()
 
-local placaImg = love.graphics.newImage('src/static/img/caveira_igual_perigo.png')
 
 local function createColliders(layer, mundo, type, class)
     local collider
@@ -23,7 +22,7 @@ end
 
 
 function Map:init(mundo)
-    self.layout = sti('src/game/1/map/Mapa_1.lua')
+    self.layout = sti('src/game/2/map/Mapa_2.lua')
     self.width = self.layout.width * self.layout.tilewidth
     self.height = self.layout.height * self.layout.tileheight
     createColliders(self.layout.layers['Obj Chão'], mundo, 'static', 'ground')
@@ -36,11 +35,6 @@ function Map:init(mundo)
         table.insert(self.platforms, platform)
     end
     
-    self.chaves = {}
-    for _, obj in ipairs(self.layout.layers['Chaves'].objects) do
-        local chave = Chave(mundo, obj.x, obj.y)
-        table.insert(self.chaves, chave)
-    end
 
     self.portas = {}
     for _, obj in ipairs(self.layout.layers['Portas'].objects) do
@@ -53,7 +47,6 @@ function Map:init(mundo)
         local acido = Acido(mundo, obj.x, obj.y, obj.width, obj.height)
         table.insert(self.acidos, acido)
     end
-    self.placa = self.layout.layers['Placas'].objects[1]
 
     self.levers = {}
     for _, obj in ipairs(self.layout.layers['Alavancas'].objects) do
@@ -73,10 +66,6 @@ function Map:init(mundo)
     for _, obj in ipairs(self.layout.layers['Caixas'].objects) do
         table.insert(self.boxes, Box(mundo, obj.x, obj.y))
     end
-    self.palets = {}
-    for _, obj in ipairs(self.layout.layers['Palets'].objects) do
-        table.insert(self.palets, Palet(mundo, obj.x, obj.y))
-    end
 end
 
 function Map:draw()
@@ -92,29 +81,14 @@ function Map:draw()
     for index, lever in ipairs(self.levers) do
         lever:draw()
     end
-    for index, palet in ipairs(self.palets) do
-        palet:draw()
-    end
     for index, acido in ipairs(self.acidos) do
         acido:draw()
     end
-
-    for index, chave in ipairs(self.chaves) do
-        chave:draw()
-    end
-
 
     for index, platform in ipairs(self.platforms) do
         platform:draw()
     end
 
-    love.graphics.draw(
-        placaImg,
-        self.placa.x,
-        self.placa.y - self.placa.height,
-        0,
-        4
-    )
 end
 
 function Map:update(dt)
@@ -123,9 +97,6 @@ function Map:update(dt)
     end
     for index, porta in ipairs(self.portas) do
         porta:update(dt)
-    end
-    for index, chave in ipairs(self.chaves) do
-        chave:update(dt)
     end
 end
 
