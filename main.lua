@@ -16,6 +16,7 @@ require 'src.game'
 require 'src.game.pause'
 require 'src.game.dead'
 require 'src.game.youwin'
+require 'src.game.gameOver'
 
 require 'src.entities.player'
 require 'src.entities.box'
@@ -43,6 +44,24 @@ fonts_google = {
     medium = love.graphics.newFont(OLD_FONT_PATH, SCREEN_WIDTH*0.03),
     big = love.graphics.newFont(OLD_FONT_PATH, SCREEN_WIDTH*0.045),
 }
+
+songs = {
+    inGame =   love.audio.newSource("src/static/audio/MoonFalls Mayhem OST 04 - The Main Theme.mp3", 'stream'),
+    youWin =   love.audio.newSource("src/static/audio/MoonFalls Mayhem OST 03 - Flowers By Will.mp3", 'stream'),
+    menu =     love.audio.newSource("src/static/audio/MoonFalls Mayhem OST 01 - Mysteries Down.mp3", "stream"),
+    gameOver = love.audio.newSource('src/static/audio/MoonFalls Mayhem OST 02 - Big Bang Moon.mp3', 'stream')
+}
+songs.inGame:setVolume(.3)
+
+
+function playSong(songToPlay)
+    for key, song in pairs(songs) do
+        song:stop()
+    end
+    songToPlay:setLooping(true)
+    songToPlay:play()
+end
+
 
 require 'src.menu.menu'
 require 'src.menu.controles'

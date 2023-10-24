@@ -11,6 +11,7 @@ local options = {
 
 
 function menu:enter()
+    playSong(songs.menu)
     canChange = true
     selectedOption = 1
     love.graphics.setFont(fonts.big)

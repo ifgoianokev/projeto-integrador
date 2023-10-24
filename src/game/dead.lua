@@ -11,6 +11,10 @@ function deadScreen:enter(level)
     if level.game.tempo <= 0 then
         level.game.vidas = 0
     end
+    if level.game.vidas == 0 then
+        Gamestate.switch(gameOver)
+        return
+    end
     timer:tween(1, screen, {opacity = 1}, 'out-quart')
 end
 
@@ -28,56 +32,33 @@ function deadScreen:draw()
     )
     love.graphics.setColor(1,0,0, screen.opacity)
 
+    love.graphics.printf(
+        "Voce morreu",
+        0,
+        SCREEN_HEIGHT/2,
+        SCREEN_WIDTH,
+        "center"
+    )
 
-    if self.level.game.tempo > 0 then        
-        love.graphics.printf(
-            "Voce morreu",
-            0,
-            SCREEN_HEIGHT/2,
-            SCREEN_WIDTH,
-            "center"
-        )
-    else
-        love.graphics.printf(
-            "O tempo acabou",
-            0,
-            SCREEN_HEIGHT/2,
-            SCREEN_WIDTH,
-            "center"
-        )
-    end
-    if self.level.game.vidas > 0 then
-        love.graphics.printf(
-            "\nJogue novamente",
-            0,
-            SCREEN_HEIGHT/2,
-            SCREEN_WIDTH,
-            "center"
-        )
-    else
-        love.graphics.printf(
-            "\nVolte ao menu",
-            0,
-            SCREEN_HEIGHT/2,
-            SCREEN_WIDTH,
-            "center"
-        )
-    end
+
+
+    love.graphics.printf(
+        "\nJogue novamente",
+        0,
+        SCREEN_HEIGHT/2,
+        SCREEN_WIDTH,
+        "center"
+    )
+
 end
 
 
 
 
 function deadScreen:tryAgain()
-    if self.level.game.vidas > 0 then
-        Gamestate.pop()
-        Gamestate.pop()
-        Gamestate.push(self.level)
-    else
-        Gamestate.pop()
-        Gamestate.pop()
-        Gamestate.switch(menu)
-    end
+    Gamestate.pop()
+    Gamestate.pop()
+    Gamestate.push(self.level)
 end
 
 function deadScreen:keypressed(tecla)

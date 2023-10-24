@@ -4,14 +4,14 @@ require 'src.game.2'
 require 'src.game.1'
 
 local jump_sound = love.audio.newSource("src/static/audio/jump.mp3", 'static')
-jump_sound:setVolume(.3)
+jump_sound:setVolume(.8)
 local heart_img = love.graphics.newImage("src/static/img/coracao.png")
 local heart_w, heart_h = heart_img:getDimensions()
 local heart_scale = .3
 
 game_timer = Timer()
 
-local timer_total = 180
+local timer_total = 300
 
 
 function game:setPlayer(player)
@@ -27,6 +27,9 @@ end
 
 
 function game:enter()
+    playSong(songs.inGame)
+
+
     Gamestate.push(fase1)
     self.vidas = 3
     tempo = timer_total

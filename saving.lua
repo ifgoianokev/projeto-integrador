@@ -4,7 +4,7 @@ saving = {}
 
 saving.getScores = function ()
     local text = love.filesystem.read("scores")
-    if text == "" then
+    if text == "" or not text then
         return {}
     end
     local scores = bitser.loads(text)

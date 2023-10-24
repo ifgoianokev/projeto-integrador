@@ -16,9 +16,12 @@ end
 function scoresMenu:draw()
     love.graphics.printf("NOME", 50, 50, SCREEN_WIDTH, 'left')
     love.graphics.printf("SCORE", 0, 50, SCREEN_WIDTH-50, 'right')
+    love.graphics.setFont(fonts_google.big)
+    --#FB6D10
+    love.graphics.setColor(0xfb/255 , 0x6d/255 ,0x10/255)
     for index, save in ipairs(scores) do
-        love.graphics.printf(save.jogador, 50, 70 + fonts.big:getHeight()*index, SCREEN_WIDTH, 'left')
-        love.graphics.printf(tostring(save.score), 0, 70 + fonts.big:getHeight()*index, SCREEN_WIDTH-50, 'right')
+        love.graphics.printf(save.jogador, 50, 70 + fonts_google.big:getHeight()*index, SCREEN_WIDTH, 'left')
+        love.graphics.printf(tostring(save.score), 0, 70 + fonts_google.big:getHeight()*index, SCREEN_WIDTH-50, 'right')
     end
     love.graphics.setColor(0,0,0)
     love.graphics.rectangle(
@@ -29,6 +32,7 @@ function scoresMenu:draw()
         fonts.big:getHeight()*2
     )
     love.graphics.setColor(1,1,1)
+    love.graphics.setFont(fonts.big)
     love.graphics.printf("Pressione b ou esc para voltar", 0, SCREEN_HEIGHT - fonts.big:getHeight(), SCREEN_WIDTH, 'left')
 end
 
