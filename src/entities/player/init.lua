@@ -11,7 +11,7 @@ local animations = {
     running = anim8.newAnimation(grid('1-8', 1), 0.08)
 }
 
-local walk_sound = love.audio.newSource("src/static/audio/running.mp3", "static")
+walk_sound = love.audio.newSource("src/static/audio/running.mp3", "static")
 walk_sound:setLooping(true)
 
 local playerSpeed = 600

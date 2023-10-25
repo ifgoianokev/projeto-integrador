@@ -3,8 +3,8 @@ game = {}
 require 'src.game.2'
 require 'src.game.1'
 
-local jump_sound = love.audio.newSource("src/static/audio/jump.mp3", 'static')
-jump_sound:setVolume(.8)
+local jump_sound = love.audio.newSource("src/static/audio/pulo.mp3", 'static')
+jump_sound:setVolume(.5)
 local heart_img = love.graphics.newImage("src/static/img/coracao.png")
 local heart_w, heart_h = heart_img:getDimensions()
 local heart_scale = .3

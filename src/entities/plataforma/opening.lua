@@ -2,7 +2,8 @@ opening = {}
 
 local look = {}
 
-function opening:enter(level, animacao, lookX, lookY)    
+function opening:enter(level, animacao, lookX, lookY)
+    walk_sound:stop()
     local x, y = camera:position()
     look = {
         x = x,
